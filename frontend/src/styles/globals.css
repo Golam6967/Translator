@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme (default) */
+  --background: #faf6ef;
+  --surface: #fff9f0;
+  --primary: #1a4a3a;
+  --accent: #b8953a;
+  --text: #2c1810;
+
+  --font-sans: "Lora", serif;
+  --font-mono: "Courier New", monospace;
+
+  --radius: 0.75rem;
+}
+
+html.dark {
+  /* Dark theme */
+  --background: #0d1b2a;
+  --surface: #1a2332;
+  --primary: #b8953a;
+  --accent: #e8dcc4;
+  --text: #e8dcc4;
+}
+
+* {
+  @apply box-border;
+}
+
+html {
+  @apply bg-background text-text scroll-smooth;
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+}
+
+body {
+  @apply m-0 p-0 bg-background text-text;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-accent text-background;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
+  font-family: "Amiri", serif;
+}
+
+h1 {
+  @apply text-4xl;
+}
+h2 {
+  @apply text-3xl;
+}
+h3 {
+  @apply text-2xl;
+}
+h4 {
+  @apply text-xl;
+}
+h5 {
+  @apply text-lg;
+}
+h6 {
+  @apply text-base;
+}
+
+/* Links */
+a {
+  @apply text-primary hover:text-accent transition-colors;
+}
+
+/* Buttons */
+button {
+  @apply transition-all duration-200;
+}
+
+button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Form inputs */
+input,
+textarea,
+select {
+  @apply bg-surface text-text border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all;
+  /* Fixed to use your root CSS variable safely */
+  border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* Fixed the placeholder error by separating the opacity rule */
+input::placeholder,
+textarea::placeholder {
+  @apply text-text text-opacity-50;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] input,
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Islamic geometric pattern background */
+.geometric-pattern {
+  /* Cleaned up CSS variable interpolation for background gradients */
+  background-image:
+    linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--primary) 5%, transparent) 25%,
+      transparent 25%
+    ),
+    linear-gradient(
+      -45deg,
+      color-mix(in srgb, var(--primary) 5%, transparent) 25%,
+      transparent 25%
+    );
+  background-size: 40px 40px;
+  background-position:
+    0 0,
+    20px 20px;
+}

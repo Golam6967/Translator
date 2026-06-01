@@ -1,0 +1,106 @@
+# ==========================================
+# 1. AUTHENTICATION & CREDENTIAL RESTRICTIONS
+# ==========================================
+# Block all local environment variable files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.json
+
+# Firebase Service Account Credentials (CRITICAL SECURITY)
+# Never commit raw private key JSON strings to public repositories
+*firebase-adminsdk*.json
+fb-service-account*.json
+service-account*.json
+credentials.json
+
+# Supabase Local Credentials & Configurations
+.supabase/functions/.env
+supabase/.temp/
+.supabase/*.key
+.supabase/*.token
+
+# Database Files
+*.db
+*.sqlite
+prisma/*.db
+prisma/*.sqlite-journal
+
+# ==========================================
+# 2. FIREBASE SYSTEM & CLI RESTRICTIONS
+# ==========================================
+# Firebase cache, staging, and hosting deployment tracking files
+.firebase/
+.firebaserc
+firebase-debug.log
+ui-debug.log
+
+# ==========================================
+# 3. NODE.JS / FRONTEND RESTRICTIONS
+# ==========================================
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Production Build outputs (Vite, Next.js, etc.)
+dist/
+build/
+.next/
+out/
+.pnpm-debug.log*
+
+# Vercel deployment artifacts
+.vercel/
+.vercel/**/*
+
+# ==========================================
+# 4. PYTHON / AI / TTS PIPELINE RESTRICTIONS
+# ==========================================
+# Byte-compiled / optimized Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environments for Python
+venv/
+.venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Generated In-Memory Audio Cache Fallbacks
+# Stops the local disk-write files from spamming commits
+output_audio/
+*.wav
+*.mp3
+
+# Hugging Face downloaded weights local caches (Prevents gigabytes of models from committing)
+.cache/huggingface/
+.cache/pip/
+
+# ==========================================
+# 5. OPERATING SYSTEM & EDITOR RESTRICTIONS
+# ==========================================
+# Windows system thumbnail caches
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS index tracking structures
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code and JetBrains local settings workspace layers
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
