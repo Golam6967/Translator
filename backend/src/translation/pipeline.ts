@@ -172,3 +172,19 @@ export async function translateSentence(
     },
   };
 }
+
+// Runs only the verify step against a supplied draft (used by the evaluation harness).
+export async function verifyDraft(
+  request: SentenceRequest,
+  draftText: string,
+  options: { requestId?: string; deps?: Partial<PipelineDeps> } = {},
+): Promise<{ data: VerifyOutput | null; meta: StepMeta }> {
+  const deps: PipelineDeps = { callLLM: options.deps?.callLLM ?? defaultCallLLM };
+  return structuredCall(
+    deps,
+    "verify",
+    verifyPrompt(request.text, draftText, request.sourceLang, request.targetLang),
+    VerifySchema,
+    options.requestId ?? randomUUID(),
+  );
+}

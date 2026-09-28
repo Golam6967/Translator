@@ -1,6 +1,7 @@
 import glossaryData from "./glossary.json";
 
 export interface GlossaryWarning {
+  id: string;
   term: string;
   expected: string[];
 }
@@ -97,6 +98,13 @@ const entries: Entry[] = (glossaryData.entries as { id: string; forms: Record<st
 
 export const GLOSSARY_SIZE = entries.length;
 
+export function detectEntryIds(source: string, sourceLang: string): string[] {
+  const normSource = normalizeText(source);
+  return entries
+    .filter((e) => (e.forms[sourceLang] ?? []).some((f) => containsForm(normSource, f.norm, sourceLang)))
+    .map((e) => e.id);
+}
+
 export function checkGlossary(input: {
   source: string;
   draft: string;
@@ -118,7 +126,7 @@ export function checkGlossary(input: {
 
     const rendered = targetForms.some((f) => containsForm(normDraft, f.norm, targetLang));
     if (!rendered) {
-      warnings.push({ term: matched.raw, expected: targetForms.map((f) => f.raw) });
+      warnings.push({ id: entry.id, term: matched.raw, expected: targetForms.map((f) => f.raw) });
     }
   }
 

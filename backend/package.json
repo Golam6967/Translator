@@ -19,7 +19,10 @@
     "import:turkish": "tsx src/scripts/importDictionary.ts turkish",
     "import:all4": "tsx src/scripts/importDictionary.ts all",
     "import:wikidata": "tsx src/scripts/importWikidata.ts",
-    "test:dictionary": "tsx src/scripts/testDictionary.ts"
+    "test:dictionary": "tsx src/scripts/testDictionary.ts",
+    "eval": "tsx --env-file=.env eval/run.ts",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +43,8 @@
     "@types/node": "^22.2.0",
     "prisma": "^5.20.0",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vite": "^7.3.6",
+    "vitest": "^5.0.2"
   }
 }

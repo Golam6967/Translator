@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "status": "Starter set written by an AI assistant. NEEDS HUMAN REVIEW. There are no reference translations; cases only check pipeline behaviour and glossary term preservation, so nothing here is linguistic ground truth.",
+    "mustContainTerms": "Glossary entry ids (see src/translation/glossary.json) whose accepted rendering must appear in the final translation."
+  },
+  "cases": [
+    { "id": "s01", "sourceLang": "en", "targetLang": "ar", "sourceText": "Prayer is the pillar of religion.", "mustContainTerms": ["salah"], "category": "glossary", "notes": "Core term, short" },
+    { "id": "s02", "sourceLang": "en", "targetLang": "ar", "sourceText": "Patience is half of faith.", "mustContainTerms": ["sabr", "iman"], "category": "glossary", "notes": "Two terms" },
+    { "id": "s03", "sourceLang": "en", "targetLang": "ar", "sourceText": "Prayer is the pillar of religion. Zakat purifies wealth. Patience is the key to relief.", "mustContainTerms": ["salah", "zakat", "sabr"], "category": "glossary", "notes": "Longer multi-sentence input" },
+    { "id": "s04", "sourceLang": "en", "targetLang": "ar", "sourceText": "The pilgrimage to Mecca is an obligation for those who are able.", "mustContainTerms": ["hajj"], "category": "glossary", "notes": "Term expressed as a common English word" },
+    { "id": "s05", "sourceLang": "en", "targetLang": "ar", "sourceText": "Every good deed is charity.", "mustContainTerms": ["sadaqah"], "category": "flag-trigger", "expectFlags": true, "notes": "Idiomatic; 'charity' has a wider sense than sadaqah" },
+    { "id": "s06", "sourceLang": "en", "targetLang": "ur", "sourceText": "Repentance and patience bring mercy.", "mustContainTerms": ["tawbah", "sabr", "rahmah"], "category": "glossary", "notes": "Three terms" },
+    { "id": "s07", "sourceLang": "en", "targetLang": "ur", "sourceText": "The mosque is open for the call to prayer.", "mustContainTerms": ["masjid", "adhan"], "category": "glossary", "notes": "Multi-word source form" },
+    { "id": "s08", "sourceLang": "en", "targetLang": "ur", "sourceText": "Have trust in God and show gratitude.", "mustContainTerms": ["tawakkul", "shukr"], "category": "glossary", "notes": "Multi-word source form" },
+    { "id": "s09", "sourceLang": "en", "targetLang": "tr", "sourceText": "Halal and haram are clear.", "mustContainTerms": ["halal", "haram"], "category": "glossary", "notes": "Terms that stay transliterated" },
+    { "id": "s10", "sourceLang": "en", "targetLang": "tr", "sourceText": "Charity does not decrease wealth.", "mustContainTerms": ["sadaqah"], "category": "glossary", "notes": "Hadith-like" },
+    { "id": "s11", "sourceLang": "en", "targetLang": "tr", "sourceText": "The Prophet taught mercy and justice.", "mustContainTerms": ["prophet", "rahmah", "adl"], "category": "glossary", "notes": "Three terms" },
+    { "id": "s12", "sourceLang": "en", "targetLang": "fa", "sourceText": "Faith and piety lead to paradise.", "mustContainTerms": ["iman", "taqwa", "jannah"], "category": "glossary", "notes": "Three terms" },
+    { "id": "s13", "sourceLang": "en", "targetLang": "fa", "sourceText": "Remembrance of God brings peace.\nPatience brings relief.", "mustContainTerms": ["dhikr", "sabr"], "category": "glossary", "notes": "Line break must be preserved" },
+    { "id": "s14", "sourceLang": "ar", "targetLang": "en", "sourceText": "الصلاة عماد الدين", "mustContainTerms": ["salah"], "category": "glossary", "notes": "Short proverb-style" },
+    { "id": "s15", "sourceLang": "ar", "targetLang": "en", "sourceText": "الصبر مفتاح الفرج", "mustContainTerms": ["sabr"], "category": "idiom", "notes": "Idiom: 'relief' has no single equivalent" },
+    { "id": "s16", "sourceLang": "ar", "targetLang": "en", "sourceText": "من صام رمضان إيمانا واحتسابا غفر له ما تقدم من ذنبه", "mustContainTerms": ["ramadan", "iman"], "category": "flag-trigger", "expectFlags": true, "notes": "Hadith; 'ihtisab' is hard to translate and should trigger the scripture notice" },
+    { "id": "s17", "sourceLang": "ar", "targetLang": "fa", "sourceText": "الزكاة تطهر المال", "mustContainTerms": ["zakat"], "category": "glossary", "notes": "Shared Arabic-derived vocabulary" },
+    { "id": "s18", "sourceLang": "ar", "targetLang": "ur", "sourceText": "الحج فريضة على المستطيع", "mustContainTerms": ["hajj"], "category": "glossary", "notes": "Legal wording" },
+    { "id": "s19", "sourceLang": "ar", "targetLang": "tr", "sourceText": "إنما الأعمال بالنيات", "mustContainTerms": [], "category": "flag-trigger", "expectFlags": true, "notes": "Famous hadith; ambiguous 'innama' and 'niyyat'" },
+    { "id": "s20", "sourceLang": "ar", "targetLang": "tr", "sourceText": "الجنة تحت أقدام الأمهات", "mustContainTerms": ["jannah"], "category": "idiom", "notes": "Figurative expression" },
+    { "id": "s21", "sourceLang": "fa", "targetLang": "en", "sourceText": "نماز ستون دین است", "mustContainTerms": ["salah"], "category": "glossary", "notes": "Persian source" },
+    { "id": "s22", "sourceLang": "fa", "targetLang": "en", "sourceText": "صبر کلید گشایش است", "mustContainTerms": ["sabr"], "category": "idiom", "notes": "Idiom" },
+    { "id": "s23", "sourceLang": "fa", "targetLang": "ar", "sourceText": "روزه سپر است", "mustContainTerms": ["sawm"], "category": "glossary", "notes": "Persian term for fasting" },
+    { "id": "s24", "sourceLang": "ur", "targetLang": "en", "sourceText": "نماز دین کا ستون ہے", "mustContainTerms": ["salah"], "category": "glossary", "notes": "Urdu source" },
+    { "id": "s25", "sourceLang": "ur", "targetLang": "en", "sourceText": "ہر مشکل کے بعد آسانی ہے", "mustContainTerms": [], "category": "ambiguous", "notes": "Echoes a Quranic verse; may trigger the scripture notice" },
+    { "id": "s26", "sourceLang": "ur", "targetLang": "ar", "sourceText": "زکوٰۃ مال کو پاک کرتی ہے", "mustContainTerms": ["zakat"], "category": "glossary", "notes": "Urdu orthography with diacritic" },
+    { "id": "s27", "sourceLang": "tr", "targetLang": "en", "sourceText": "Namaz dinin direğidir.", "mustContainTerms": ["salah"], "category": "glossary", "notes": "Turkish source" },
+    { "id": "s28", "sourceLang": "tr", "targetLang": "en", "sourceText": "Sabır selametin anahtarıdır.", "mustContainTerms": ["sabr"], "category": "idiom", "notes": "Turkish proverb" },
+    { "id": "s29", "sourceLang": "tr", "targetLang": "ar", "sourceText": "Zekat malı temizler.", "mustContainTerms": ["zakat"], "category": "glossary", "notes": "Turkish source, Arabic target" },
+    { "id": "s30", "sourceLang": "tr", "targetLang": "ur", "sourceText": "Ramazan ayında oruç tutmak farzdır.", "mustContainTerms": ["ramadan", "sawm"], "category": "glossary", "notes": "Two terms" }
+  ]
+}

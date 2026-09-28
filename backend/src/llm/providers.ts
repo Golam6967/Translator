@@ -51,6 +51,8 @@ async function postJson(
   }
 }
 
+export const groqModel = (): string => process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+
 export const groqProvider: Provider = {
   name: "groq",
   isConfigured: () => Boolean(process.env.GROQ_API_KEY),
@@ -59,7 +61,7 @@ export const groqProvider: Provider = {
       "https://api.groq.com/openai/v1/chat/completions",
       { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
       {
-        model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
+        model: groqModel(),
         temperature: 0,
         response_format: { type: "json_object" },
         messages: [{ role: "user", content: prompt }],
@@ -77,7 +79,7 @@ export const groqProvider: Provider = {
 // All are listed as current (no shutdown date) at https://ai.google.dev/gemini-api/docs/deprecations
 const DEFAULT_GEMINI_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"];
 
-function geminiModels(): string[] {
+export function geminiModels(): string[] {
   const configured = (process.env.GEMINI_MODEL ?? "")
     .split(",")
     .map((m) => m.trim())

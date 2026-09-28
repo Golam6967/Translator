@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "status": "Starter set written by an AI assistant. NEEDS HUMAN REVIEW.",
+    "purpose": "Each non-control case pairs a source with a draft translation that is deliberately wrong. The verify step should report an issue. Controls have a correct draft and should be reported as passing; a flagged control counts as a false positive."
+  },
+  "cases": [
+    { "id": "c01", "sourceLang": "en", "targetLang": "ar", "sourceText": "Prayer is the pillar of religion.", "draft": "الزكاة عماد الدين.", "corruption": "mistranslation: prayer replaced by zakat" },
+    { "id": "c02", "sourceLang": "en", "targetLang": "ar", "sourceText": "Patience is half of faith.", "draft": "الصبر نصف الكفر.", "corruption": "mistranslation: faith replaced by disbelief" },
+    { "id": "c03", "sourceLang": "en", "targetLang": "ur", "sourceText": "Give charity and be patient.", "draft": "صدقہ دو۔", "corruption": "omission: 'be patient' dropped" },
+    { "id": "c04", "sourceLang": "en", "targetLang": "tr", "sourceText": "Halal and haram are clear.", "draft": "Helal ve haram gizlidir.", "corruption": "mistranslation: clear replaced by hidden" },
+    { "id": "c05", "sourceLang": "ar", "targetLang": "en", "sourceText": "الصبر مفتاح الفرج", "draft": "Patience is the key to relief, and it always guarantees wealth.", "corruption": "addition: unsupported claim about wealth" },
+    { "id": "c06", "sourceLang": "tr", "targetLang": "en", "sourceText": "Namaz dinin direğidir.", "draft": "Fasting is the pillar of religion.", "corruption": "mistranslation: prayer replaced by fasting" },
+    { "id": "c07", "sourceLang": "ar", "targetLang": "tr", "sourceText": "الجنة تحت أقدام الأمهات", "draft": "Cennet babaların ayakları altındadır.", "corruption": "mistranslation: mothers replaced by fathers" },
+    { "id": "c08", "sourceLang": "fa", "targetLang": "en", "sourceText": "نماز ستون دین است", "draft": "Prayer is the enemy of religion.", "corruption": "mistranslation: pillar replaced by enemy" },
+    { "id": "k01", "isControl": true, "sourceLang": "en", "targetLang": "ar", "sourceText": "Prayer is the pillar of religion.", "draft": "الصلاة عماد الدين.", "corruption": "control: correct draft" },
+    { "id": "k02", "isControl": true, "sourceLang": "ar", "targetLang": "en", "sourceText": "الصبر مفتاح الفرج", "draft": "Patience is the key to relief.", "corruption": "control: correct draft" },
+    { "id": "k03", "isControl": true, "sourceLang": "tr", "targetLang": "en", "sourceText": "Namaz dinin direğidir.", "draft": "Prayer is the pillar of religion.", "corruption": "control: correct draft" }
+  ]
+}
