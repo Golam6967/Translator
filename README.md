@@ -1,6 +1,6 @@
-# Al-Maktaba - Islamic Translation Companion
+# Acculator - Islamic Translation Companion
 
-A full-stack application for translating Islamic texts and scriptures across multiple languages. Built with React, Express.js, Supabase, and Firebase.
+A full-stack application for translating Islamic texts and scriptures across multiple languages. Built with React, Express.js, PostgreSQL (Docker), and Firebase.
 
 ## Project Structure
 
@@ -13,9 +13,9 @@ A full-stack application for translating Islamic texts and scriptures across mul
 
 ### Prerequisites
 
-- Node.js 16+ and npm/pnpm
+- Node.js 24 (see `.nvmrc`) and npm
 - Firebase Project (for authentication)
-- Supabase Project (for database)
+- Docker (runs the local PostgreSQL database via `docker compose up -d`)
 - Groq API Key (for LLM translations)
 
 ### Environment Variables
@@ -23,7 +23,7 @@ A full-stack application for translating Islamic texts and scriptures across mul
 #### Backend (`/backend/.env`)
 
 ```
-DATABASE_URL=postgresql://user:password@host:5432/almaktaba
+DATABASE_URL=postgresql://acculator:acculator@localhost:5432/acculator
 GROQ_API_KEY=gsk_your_key_here
 FIREBASE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
 FIREBASE_PROJECT_ID=your-firebase-project
@@ -177,7 +177,7 @@ The frontend will run on `http://localhost:3000`
 - Express.js
 - TypeScript
 - Prisma ORM
-- PostgreSQL (Supabase)
+- PostgreSQL (Docker)
 - Firebase Admin SDK
 - LangChain
 - Groq SDK
