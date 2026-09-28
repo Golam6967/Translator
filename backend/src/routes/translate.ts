@@ -9,6 +9,7 @@ import {
   isValidLangCode,
   translateWord,
 } from "../services/translationService";
+import { saveSentenceHistory } from "../translation/history";
 import { translateSentence } from "../translation/pipeline";
 import { SentenceRequestSchema } from "../translation/schemas";
 
@@ -112,7 +113,14 @@ router.post(
         throw new ApiError(400, message);
       }
 
-      res.status(200).json(await translateSentence(parsed.data));
+      const result = await translateSentence(parsed.data);
+
+      // History is non-critical: a failed save must not fail the translation.
+      saveSentenceHistory(req.userId as string, parsed.data, result).catch((error) =>
+        console.error("[TRANSLATE:HISTORY]", error),
+      );
+
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

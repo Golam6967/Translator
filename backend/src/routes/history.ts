@@ -7,6 +7,7 @@ const router = Router();
 
 const VALID_TYPES = [
   "translate",
+  "translate_sentence",
   "extract_image",
   "extract_document",
   "create_note",

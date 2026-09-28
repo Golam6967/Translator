@@ -27,6 +27,7 @@ interface HistoryItem {
 
 const typeIcons: { [key: string]: React.ComponentType<any> } = {
   translate: Type,
+  translate_sentence: FileText,
   extract_image: ImageIcon,
   extract_document: FileText,
   create_note: NotebookPen,
@@ -34,6 +35,7 @@ const typeIcons: { [key: string]: React.ComponentType<any> } = {
 
 const typeLabels: { [key: string]: string } = {
   translate: "Translation",
+  translate_sentence: "Sentence Translation",
   extract_image: "Image Extraction",
   extract_document: "Document Extraction",
   create_note: "Note Created",
