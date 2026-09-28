@@ -55,6 +55,7 @@ backend/   Express + TypeScript API, Prisma (PostgreSQL), SQLite dictionary, LLM
 frontend/  React 18 + Vite + Tailwind
 docker-compose.yml   local PostgreSQL
 docs/AUDIT.md        notes on the repo's state and open decisions
+docs/DEPLOY.md        Railway (backend + Postgres) + Vercel (frontend) deploy steps
 ```
 
 ## Setup
@@ -83,7 +84,7 @@ If you switch Node versions, run `npm rebuild better-sqlite3` in `backend/` (it 
 
 ### The dictionary
 
-`backend/data/dictionary.sqlite` is created empty on first run and is **not** in the repository. It is built from Wiktionary extracts (JSONL, about 4 GB, gitignored) placed in `backend/src/scripts/data/`:
+`backend/data/dictionary.sqlite` (about 40 MB) is committed to the repo, so it's ready to use as-is — no import step needed to get started. It was built from Wiktionary extracts (JSONL, about 4 GB, gitignored) placed in `backend/src/scripts/data/`; to rebuild it from scratch or add coverage:
 
 ```bash
 cd backend

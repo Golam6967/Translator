@@ -1,2 +1,3 @@
-data/
+data/*
+!data/dictionary.sqlite
 src/scripts/data/

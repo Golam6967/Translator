@@ -25,6 +25,7 @@ supabase/.temp/
 # Database Files
 *.db
 *.sqlite
+!backend/data/dictionary.sqlite
 prisma/*.db
 prisma/*.sqlite-journal
 
