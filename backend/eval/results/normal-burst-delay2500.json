@@ -1,0 +1,1499 @@
+{
+  "mode": "normal",
+  "date": "2026-09-28",
+  "models": {
+    "groq": "openai/gpt-oss-120b",
+    "gemini": [
+      "gemini-3.8-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash"
+    ]
+  },
+  "limit": null,
+  "sentences": [
+    {
+      "id": "s01",
+      "ok": true,
+      "latencyMs": 3018,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 843,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 897,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2126,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s02",
+      "ok": true,
+      "latencyMs": 3229,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 652,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 983,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2574,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "sabr": true,
+        "iman": true
+      }
+    },
+    {
+      "id": "s03",
+      "ok": true,
+      "latencyMs": 4037,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1223,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1207,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2737,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 4,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true,
+        "zakat": true,
+        "sabr": true
+      }
+    },
+    {
+      "id": "s04",
+      "ok": true,
+      "latencyMs": 3414,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 676,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 759,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2733,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "hajj": true
+      }
+    },
+    {
+      "id": "s05",
+      "ok": true,
+      "latencyMs": 13404,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 574,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1959,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 2,
+      "expectFlags": true,
+      "scriptureNotice": false,
+      "terms": {
+        "sadaqah": true
+      }
+    },
+    {
+      "id": "s06",
+      "ok": true,
+      "latencyMs": 3535,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 554,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 606,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "tawbah": true,
+        "sabr": true,
+        "rahmah": true
+      }
+    },
+    {
+      "id": "s07",
+      "ok": true,
+      "latencyMs": 2345,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 739,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 808,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "masjid": true,
+        "adhan": true
+      }
+    },
+    {
+      "id": "s08",
+      "ok": true,
+      "latencyMs": 11453,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 514,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1041,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 10938,
+          "attempts": 3,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 1,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "tawakkul": false,
+        "shukr": true
+      }
+    },
+    {
+      "id": "s09",
+      "ok": true,
+      "latencyMs": 2375,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 972,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 802,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1398,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "halal": true,
+        "haram": true
+      }
+    },
+    {
+      "id": "s10",
+      "ok": true,
+      "latencyMs": 13791,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 529,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 904,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 13260,
+          "attempts": 3,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 1,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "sadaqah": false
+      }
+    },
+    {
+      "id": "s11",
+      "ok": true,
+      "latencyMs": 4281,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 615,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2770,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 3663,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "prophet": true,
+        "rahmah": false,
+        "adl": true
+      }
+    },
+    {
+      "id": "s12",
+      "ok": true,
+      "latencyMs": 3408,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 767,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1411,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2640,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "iman": true,
+        "taqwa": true,
+        "jannah": true
+      }
+    },
+    {
+      "id": "s13",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1722,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s14",
+      "ok": true,
+      "latencyMs": 2082,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 487,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s15",
+      "ok": true,
+      "latencyMs": 13434,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 695,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 668,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 12739,
+          "attempts": 3,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 2,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "sabr": true
+      }
+    },
+    {
+      "id": "s16",
+      "ok": true,
+      "latencyMs": 5403,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 648,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1017,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 4753,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": true,
+      "scriptureNotice": true,
+      "terms": {
+        "ramadan": true,
+        "iman": true
+      }
+    },
+    {
+      "id": "s17",
+      "ok": true,
+      "latencyMs": 2095,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 500,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "zakat": true
+      }
+    },
+    {
+      "id": "s18",
+      "ok": true,
+      "latencyMs": 2168,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 693,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1374,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "hajj": true
+      }
+    },
+    {
+      "id": "s19",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1492,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s20",
+      "ok": true,
+      "latencyMs": 2878,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 716,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2160,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "jannah": true
+      }
+    },
+    {
+      "id": "s21",
+      "ok": true,
+      "latencyMs": 2242,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 605,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 707,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s22",
+      "ok": true,
+      "latencyMs": 2186,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 716,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1286,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "sabr": true
+      }
+    },
+    {
+      "id": "s23",
+      "ok": true,
+      "latencyMs": 2861,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1025,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 1834,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "sawm": true
+      }
+    },
+    {
+      "id": "s24",
+      "ok": true,
+      "latencyMs": 2752,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 498,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 2253,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s25",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1534,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s26",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1514,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s27",
+      "ok": true,
+      "latencyMs": 2193,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 642,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s28",
+      "ok": true,
+      "latencyMs": 2524,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 947,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 637,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "sabr": true
+      }
+    },
+    {
+      "id": "s29",
+      "ok": true,
+      "latencyMs": 2319,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 634,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 751,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "zakat": true
+      }
+    },
+    {
+      "id": "s30",
+      "ok": true,
+      "latencyMs": 2309,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 740,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "groq",
+          "fallbackUsed": false,
+          "latencyMs": 657,
+          "attempts": 1,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "ramadan": true,
+        "sawm": true
+      }
+    }
+  ],
+  "corrupted": [
+    {
+      "id": "c01",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c02",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c03",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c04",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c05",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c06",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c07",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "c08",
+      "isControl": false,
+      "skipped": false,
+      "flagged": true
+    },
+    {
+      "id": "k01",
+      "isControl": true,
+      "skipped": false,
+      "flagged": false
+    },
+    {
+      "id": "k02",
+      "isControl": true,
+      "skipped": false,
+      "flagged": false
+    },
+    {
+      "id": "k03",
+      "isControl": true,
+      "skipped": false,
+      "flagged": false
+    }
+  ],
+  "words": [
+    {
+      "word": "water",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "book",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "house",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "knowledge",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "light",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "peace",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "heart",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "friend",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "night",
+      "category": "common",
+      "source": "groq",
+      "latencyMs": 849
+    },
+    {
+      "word": "path",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "truth",
+      "category": "common",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "mercy",
+      "category": "islamic",
+      "source": "groq",
+      "latencyMs": 802
+    },
+    {
+      "word": "patience",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "prayer",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "fasting",
+      "category": "islamic",
+      "source": "groq",
+      "latencyMs": 915
+    },
+    {
+      "word": "charity",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "forgiveness",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "paradise",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "justice",
+      "category": "islamic",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "gratitude",
+      "category": "islamic",
+      "source": "groq",
+      "latencyMs": 681
+    },
+    {
+      "word": "Musab",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 802
+    },
+    {
+      "word": "Yusuf",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 744
+    },
+    {
+      "word": "Aisha",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 696
+    },
+    {
+      "word": "Khadijah",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 688
+    },
+    {
+      "word": "Ibrahim",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 756
+    },
+    {
+      "word": "Fatima",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 646
+    },
+    {
+      "word": "Zaynab",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 708
+    },
+    {
+      "word": "Bilal",
+      "category": "name",
+      "source": "groq",
+      "latencyMs": 1680
+    },
+    {
+      "word": "serendipity",
+      "category": "rare",
+      "source": "groq",
+      "latencyMs": 844
+    },
+    {
+      "word": "ephemeral",
+      "category": "rare",
+      "source": "groq",
+      "latencyMs": 1139
+    },
+    {
+      "word": "perseverance",
+      "category": "rare",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "صبر",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 2
+    },
+    {
+      "word": "علم",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "نور",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "قلب",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "كتاب",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "پانی",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "کتاب",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "علم",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "آب",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "دوست",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "کتاب",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "kitap",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "su",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    },
+    {
+      "word": "dost",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 0
+    },
+    {
+      "word": "sabır",
+      "category": "reverse",
+      "source": "dictionary",
+      "latencyMs": 1
+    }
+  ]
+}

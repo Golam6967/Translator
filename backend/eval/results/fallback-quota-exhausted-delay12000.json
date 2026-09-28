@@ -1,0 +1,138 @@
+{
+  "mode": "fallback",
+  "date": "2026-09-28",
+  "models": {
+    "groq": "openai/gpt-oss-120b",
+    "gemini": [
+      "gemini-3.8-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash"
+    ]
+  },
+  "limit": 15,
+  "delayMs": 12000,
+  "sentences": [
+    {
+      "id": "s01",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1882,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s02",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1179,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s03",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1215,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s04",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1226,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s05",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1083,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s06",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1108,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s07",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1123,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s08",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1215,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s09",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1164,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s10",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1230,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s11",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1168,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s12",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1137,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s13",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1282,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s14",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1117,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s15",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1386,
+      "steps": [],
+      "terms": {}
+    }
+  ],
+  "corrupted": [],
+  "words": []
+}

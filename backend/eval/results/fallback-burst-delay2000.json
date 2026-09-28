@@ -1,0 +1,344 @@
+{
+  "mode": "fallback",
+  "date": "2026-09-28",
+  "models": {
+    "groq": "openai/gpt-oss-120b",
+    "gemini": [
+      "gemini-3.8-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash"
+    ]
+  },
+  "limit": 15,
+  "sentences": [
+    {
+      "id": "s01",
+      "ok": true,
+      "latencyMs": 14961,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 5281,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 5901,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 9635,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 1,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s02",
+      "ok": true,
+      "latencyMs": 31849,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 5430,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 9306,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 26417,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 1,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "sabr": true,
+        "iman": true
+      }
+    },
+    {
+      "id": "s03",
+      "ok": true,
+      "latencyMs": 19691,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 5919,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 9370,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 13770,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 3,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "salah": true,
+        "zakat": true,
+        "sabr": true
+      }
+    },
+    {
+      "id": "s04",
+      "ok": true,
+      "latencyMs": 7630,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 4958,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "skipped",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "hajj": true
+      }
+    },
+    {
+      "id": "s05",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1016,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s06",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 925,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s07",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 969,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s08",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 952,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s09",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 973,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s10",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 910,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s11",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 941,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s12",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 1048,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s13",
+      "ok": false,
+      "error": "status 503",
+      "latencyMs": 891,
+      "steps": [],
+      "terms": {}
+    },
+    {
+      "id": "s14",
+      "ok": true,
+      "latencyMs": 10160,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 2471,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 5213,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 7689,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 2,
+      "expectFlags": false,
+      "scriptureNotice": true,
+      "terms": {
+        "salah": true
+      }
+    },
+    {
+      "id": "s15",
+      "ok": true,
+      "latencyMs": 10500,
+      "steps": [
+        {
+          "name": "draft",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 6879,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "verify",
+          "provider": "gemini",
+          "fallbackUsed": true,
+          "latencyMs": 3620,
+          "attempts": 2,
+          "status": "ok",
+          "validFirstTry": true
+        },
+        {
+          "name": "flag",
+          "provider": null,
+          "fallbackUsed": false,
+          "latencyMs": 0,
+          "attempts": 0,
+          "status": "skipped",
+          "validFirstTry": false
+        }
+      ],
+      "verificationStatus": "passed",
+      "revisionApplied": false,
+      "flagsCount": 0,
+      "expectFlags": false,
+      "scriptureNotice": false,
+      "terms": {
+        "sabr": true
+      }
+    }
+  ],
+  "corrupted": [],
+  "words": []
+}
