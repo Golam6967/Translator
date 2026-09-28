@@ -47,7 +47,7 @@ Both packages install with `npm install --legacy-peer-deps`.
 
 ## Environment
 
-- Backend `.env`: `DATABASE_URL` (local Docker Postgres, `postgresql://acculator:acculator@localhost:5432/acculator`), `FIREBASE_SERVICE_ACCOUNT_KEY` (raw JSON), `GROQ_API_KEY`, `PORT`. Optional: `GOOGLE_GENERATIVE_AI_API_KEY` (Gemini fallback; skipped if unset), `GROQ_MODEL` (default `openai/gpt-oss-120b`), `GEMINI_MODEL` (default `gemini-2.5-flash`). Loaded via `--env-file=.env` in the dev script.
+- Backend `.env`: `DATABASE_URL` (local Docker Postgres, `postgresql://acculator:acculator@localhost:5432/acculator`), `FIREBASE_SERVICE_ACCOUNT_KEY` (raw JSON), `GROQ_API_KEY`, `PORT`. Optional: `GOOGLE_GENERATIVE_AI_API_KEY` (Gemini fallback; skipped if unset), `GROQ_MODEL` (default `openai/gpt-oss-120b`), `GEMINI_MODEL` (comma-separated, tried in order; default `gemini-3.8-flash,gemini-3.5-flash,gemini-2.5-flash`). Loaded via `--env-file=.env` in the dev script.
 - The dictionary is a local file, not env-configured: `backend/src/lib/dictionary-db.ts` opens/creates `backend/data/dictionary.sqlite` on import, populated via the `import:*` scripts from JSONL sources in `backend/src/scripts/data/`. Both `data/` directories are gitignored (the JSONL sources are about 4 GB).
 - Frontend needs `VITE_FIREBASE_*` keys and `VITE_API_BASE_URL` (defaults to `http://localhost:5000`), read in `frontend/src/lib/firebase.ts` / `lib/api.ts`.
 - Both `.env` files are gitignored; `.env.example` in each package documents the shape.

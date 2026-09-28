@@ -73,24 +73,46 @@ export const groqProvider: Provider = {
   },
 };
 
+// Tried in order; a model that is overloaded or rate limited falls through to the next.
+// All are listed as current (no shutdown date) at https://ai.google.dev/gemini-api/docs/deprecations
+const DEFAULT_GEMINI_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"];
+
+function geminiModels(): string[] {
+  const configured = (process.env.GEMINI_MODEL ?? "")
+    .split(",")
+    .map((m) => m.trim())
+    .filter(Boolean);
+  return configured.length > 0 ? configured : DEFAULT_GEMINI_MODELS;
+}
+
 export const geminiProvider: Provider = {
   name: "gemini",
   isConfigured: () => Boolean(process.env.GOOGLE_GENERATIVE_AI_API_KEY),
   async complete(prompt, timeoutMs) {
-    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-    const data = (await postJson(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      { "x-goog-api-key": process.env.GOOGLE_GENERATIVE_AI_API_KEY as string },
-      {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0, responseMimeType: "application/json" },
-      },
-      timeoutMs,
-    )) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+    let lastError: ProviderError = new ProviderError("no_model_configured", false);
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new ProviderError("empty_response", false);
-    return text;
+    for (const model of geminiModels()) {
+      try {
+        const data = (await postJson(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          { "x-goog-api-key": process.env.GOOGLE_GENERATIVE_AI_API_KEY as string },
+          {
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0, responseMimeType: "application/json" },
+          },
+          timeoutMs,
+        )) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) throw new ProviderError("empty_response", true);
+        return text;
+      } catch (error) {
+        if (!(error instanceof ProviderError) || !error.transient) throw error;
+        lastError = error;
+      }
+    }
+
+    throw lastError;
   },
 };
 
