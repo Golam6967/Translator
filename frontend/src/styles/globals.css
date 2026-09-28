@@ -12,6 +12,14 @@
   --accent: #b8953a;
   --text: #2c1810;
 
+  /* RGB channel triplets so Tailwind's color-opacity modifiers (e.g. bg-primary/10)
+     can actually apply — a bare hex custom property can't be given an alpha channel. */
+  --background-rgb: 250 246 239;
+  --surface-rgb: 255 249 240;
+  --primary-rgb: 26 74 58;
+  --accent-rgb: 184 149 58;
+  --text-rgb: 44 24 16;
+
   --font-sans: "Lora", serif;
   --font-mono: "Courier New", monospace;
 
@@ -20,11 +28,17 @@
 
 html.dark {
   /* Dark theme */
-  --background: #0d1b2a;
-  --surface: #1a2332;
+  --background: #1a1a1a;
+  --surface: #242424;
   --primary: #b8953a;
   --accent: #e8dcc4;
   --text: #e8dcc4;
+
+  --background-rgb: 26 26 26;
+  --surface-rgb: 36 36 36;
+  --primary-rgb: 184 149 58;
+  --accent-rgb: 232 220 196;
+  --text-rgb: 232 220 196;
 }
 
 * {
@@ -36,6 +50,16 @@ html {
   font-feature-settings:
     "rlig" 1,
     "calt" 1;
+}
+
+html[data-font-size="small"] {
+  font-size: 14px;
+}
+html[data-font-size="medium"] {
+  font-size: 16px;
+}
+html[data-font-size="large"] {
+  font-size: 18px;
 }
 
 body {
@@ -153,6 +177,25 @@ textarea::placeholder {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+/* Skeleton loading shimmer */
+.skeleton {
+  @apply rounded-lg relative overflow-hidden;
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Focus ring used by interactive primitives */
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
 /* Islamic geometric pattern background */

@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Sun, Moon } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { useFontSize } from "../contexts/FontSizeContext";
+import { useToast } from "../contexts/ToastContext";
 import api from "../lib/api";
+import { languages } from "../lib/languages";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
+import Skeleton from "../components/ui/Skeleton";
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [fontSize, setFontSize] = useState("medium");
-  const [defaultSourceLang, setDefaultSourceLang] = useState("bn");
+  const [defaultSourceLang, setDefaultSourceLang] = useState(
+    () => localStorage.getItem("defaultSourceLang") || "en",
+  );
   const [displayName, setDisplayName] = useState("");
   const { t, language, setLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const { fontSize, setFontSize } = useFontSize();
+  const { showToast } = useToast();
 
   useEffect(() => {
     fetchProfile();
@@ -20,8 +31,13 @@ export default function SettingsPage() {
     try {
       const response = await api.get("/api/users/profile");
       setDisplayName(response.data.displayName || "");
+      const savedLang = response.data.defaultSourceLang;
+      setDefaultSourceLang(
+        languages.some((l) => l.code === savedLang) ? savedLang : "en",
+      );
       setFontSize(response.data.fontSize || "medium");
-      setDefaultSourceLang(response.data.defaultSourceLang || "bn");
+      setLanguage(response.data.language || "en");
+      setTheme(response.data.theme || "light");
     } catch (error) {
       console.error("Failed to fetch profile:", error);
     } finally {
@@ -37,10 +53,12 @@ export default function SettingsPage() {
         fontSize,
         defaultSourceLang,
         language,
+        theme,
       });
-      alert("Settings saved!");
+      localStorage.setItem("defaultSourceLang", defaultSourceLang);
+      showToast("Settings saved!", "success");
     } catch (error) {
-      alert("Failed to save settings");
+      showToast("Failed to save settings", "error");
     } finally {
       setSaving(false);
     }
@@ -48,21 +66,36 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>{t("common.loading")}</p>
+      <div className="max-w-2xl mx-auto px-6 sm:px-8 py-10 space-y-6">
+        <Skeleton className="h-10 w-52" />
+        <div className="bg-surface rounded-xl shadow-card p-8 space-y-6">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-12 w-full" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-4xl font-bold text-primary mb-8">{t("settings.title")}</h1>
+    <div className="max-w-2xl mx-auto px-6 sm:px-8 py-10">
+      <motion.h1
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-4xl font-bold text-primary mb-8"
+      >
+        {t("settings.title")}
+      </motion.h1>
 
-      <div className="bg-surface rounded-lg shadow-lg p-8 space-y-6">
+      <Card
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="p-8 space-y-6"
+      >
         {/* Display Name */}
         <div>
           <label className="block text-sm font-medium text-text mb-2">
-            Display Name
+            {t("auth.displayName")}
           </label>
           <input
             type="text"
@@ -79,24 +112,24 @@ export default function SettingsPage() {
           </label>
           <div className="flex gap-4">
             <button
-              onClick={() => toggleTheme()}
-              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all ${
+              onClick={() => setTheme("light")}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-bold transition-all duration-200 focus-ring active:scale-[0.98] ${
                 theme === "light"
-                  ? "bg-primary text-white"
-                  : "bg-primary/20 text-primary hover:bg-primary/30"
+                  ? "bg-primary text-white shadow-soft"
+                  : "bg-primary/10 text-primary hover:bg-primary/20"
               }`}
             >
-              ☀️ {t("settings.light")}
+              <Sun className="w-4 h-4" /> {t("settings.light")}
             </button>
             <button
-              onClick={() => toggleTheme()}
-              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all ${
+              onClick={() => setTheme("dark")}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-bold transition-all duration-200 focus-ring active:scale-[0.98] ${
                 theme === "dark"
-                  ? "bg-primary text-white"
-                  : "bg-primary/20 text-primary hover:bg-primary/30"
+                  ? "bg-primary text-white shadow-soft"
+                  : "bg-primary/10 text-primary hover:bg-primary/20"
               }`}
             >
-              🌙 {t("settings.dark")}
+              <Moon className="w-4 h-4" /> {t("settings.dark")}
             </button>
           </div>
         </div>
@@ -109,20 +142,20 @@ export default function SettingsPage() {
           <div className="flex gap-4">
             <button
               onClick={() => setLanguage("en")}
-              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all ${
+              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all duration-200 focus-ring active:scale-[0.98] ${
                 language === "en"
-                  ? "bg-primary text-white"
-                  : "bg-primary/20 text-primary hover:bg-primary/30"
+                  ? "bg-primary text-white shadow-soft"
+                  : "bg-primary/10 text-primary hover:bg-primary/20"
               }`}
             >
               🇬🇧 English
             </button>
             <button
               onClick={() => setLanguage("bn")}
-              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all ${
+              className={`flex-1 py-3 px-4 rounded-lg font-bold transition-all duration-200 focus-ring active:scale-[0.98] ${
                 language === "bn"
-                  ? "bg-primary text-white"
-                  : "bg-primary/20 text-primary hover:bg-primary/30"
+                  ? "bg-primary text-white shadow-soft"
+                  : "bg-primary/10 text-primary hover:bg-primary/20"
               }`}
             >
               🇧🇩 বাংলা
@@ -137,7 +170,7 @@ export default function SettingsPage() {
           </label>
           <select
             value={fontSize}
-            onChange={(e) => setFontSize(e.target.value)}
+            onChange={(e) => setFontSize(e.target.value as "small" | "medium" | "large")}
             className="w-full"
           >
             <option value="small">Small</option>
@@ -156,24 +189,24 @@ export default function SettingsPage() {
             onChange={(e) => setDefaultSourceLang(e.target.value)}
             className="w-full"
           >
-            <option value="bn">Bengali</option>
-            <option value="en">English</option>
-            <option value="ar">Arabic</option>
-            <option value="fa">Persian</option>
-            <option value="ur">Urdu</option>
-            <option value="tr">Turkish</option>
+            {languages.map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
           </select>
         </div>
 
         {/* Save Button */}
-        <button
+        <Button
           onClick={handleSave}
-          disabled={saving}
-          className="w-full bg-primary hover:bg-accent text-white font-bold py-3 rounded-lg transition-colors disabled:opacity-50"
+          loading={saving}
+          size="lg"
+          className="w-full"
         >
           {saving ? "Saving..." : t("common.save")}
-        </button>
-      </div>
+        </Button>
+      </Card>
     </div>
   );
 }

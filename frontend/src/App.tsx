@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { FontSizeProvider } from "./contexts/FontSizeContext";
+import { ToastProvider } from "./contexts/ToastContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 // Pages
@@ -15,29 +17,33 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <Routes>
-              {/* Auth routes */}
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/auth-callback" element={<AuthCallbackPage />} />
+        <FontSizeProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <BrowserRouter>
+                <Routes>
+                  {/* Auth routes */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/auth-callback" element={<AuthCallbackPage />} />
 
-              {/* Protected routes */}
-              <Route
-                path="/*"
-                element={
-                  <ProtectedRoute>
-                    <DashboardLayout />
-                  </ProtectedRoute>
-                }
-              />
+                  {/* Protected routes */}
+                  <Route
+                    path="/*"
+                    element={
+                      <ProtectedRoute>
+                        <DashboardLayout />
+                      </ProtectedRoute>
+                    }
+                  />
 
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
+                  {/* Fallback */}
+                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Routes>
+              </BrowserRouter>
+            </AuthProvider>
+          </ToastProvider>
+        </FontSizeProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

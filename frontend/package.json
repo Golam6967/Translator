@@ -1,7 +1,7 @@
 {
-  "name": "almaktaba-frontend",
+  "name": "acculator-frontend",
   "version": "1.0.0",
-  "description": "Al-Maktaba Islamic Translation Companion - Frontend",
+  "description": "Acculator Islamic Translation Companion - Frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,6 +13,8 @@
     "axios": "^1.6.0",
     "date-fns": "^2.30.0",
     "firebase": "^10.7.0",
+    "framer-motion": "^12.42.2",
+    "lucide-react": "^1.23.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",

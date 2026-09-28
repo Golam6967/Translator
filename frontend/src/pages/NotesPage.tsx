@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Pencil, Trash2, AlertCircle, NotebookPen } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useToast } from "../contexts/ToastContext";
 import notesService, { Note } from "../services/notesService";
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
+import Skeleton from "../components/ui/Skeleton";
+import ConfirmDialog from "../components/ui/ConfirmDialog";
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -12,7 +19,9 @@ export default function NotesPage() {
   const [tags, setTags] = useState("");
   const [language, setLanguage] = useState("en");
   const [error, setError] = useState("");
+  const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const { t } = useLanguage();
+  const { showToast } = useToast();
 
   useEffect(() => {
     fetchNotes();
@@ -34,14 +43,12 @@ export default function NotesPage() {
 
   const handleOpenForm = (note?: Note) => {
     if (note) {
-      // Edit mode
       setEditingId(note.id);
       setTitle(note.title);
       setContent(note.content);
       setTags(note.tags.join(", "));
       setLanguage(note.language);
     } else {
-      // Create mode
       setEditingId(null);
       setTitle("");
       setContent("");
@@ -80,11 +87,11 @@ export default function NotesPage() {
       };
 
       if (editingId) {
-        // Update existing note
         await notesService.updateNote(editingId, noteData);
+        showToast("Note updated", "success");
       } else {
-        // Create new note
         await notesService.createNote(noteData);
+        showToast("Note created", "success");
       }
 
       handleCloseForm();
@@ -95,181 +102,232 @@ export default function NotesPage() {
     }
   };
 
-  const handleDeleteNote = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this note?")) return;
+  const handleDeleteNote = async () => {
+    if (!pendingDelete) return;
+    const id = pendingDelete;
+    setPendingDelete(null);
 
     try {
       await notesService.deleteNote(id);
-      fetchNotes();
+      setNotes((prev) => prev.filter((n) => n.id !== id));
+      showToast("Note deleted", "success");
     } catch (err: any) {
       console.error("Failed to delete note:", err);
-      setError("Failed to delete note");
+      showToast("Failed to delete note", "error");
     }
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto px-6 sm:px-8 py-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-bold text-primary">{t("notes.title")}</h1>
-        <button
-          onClick={() => handleOpenForm()}
-          className="bg-accent hover:bg-primary text-white font-bold px-6 py-2 rounded-lg transition-colors"
+        <motion.h1
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-4xl font-bold text-primary"
         >
-          {t("notes.new")}
-        </button>
+          {t("notes.title")}
+        </motion.h1>
+        <Button
+          variant={showForm ? "secondary" : "primary"}
+          icon={<Plus />}
+          onClick={() => (showForm ? handleCloseForm() : handleOpenForm())}
+        >
+          {showForm ? t("common.cancel") : t("notes.new")}
+        </Button>
       </div>
 
-      {error && (
-        <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg">
-          {error}
-        </div>
-      )}
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-4 flex items-center gap-2 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg overflow-hidden"
+          >
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            {error}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {showForm && (
-        <form
-          onSubmit={handleSaveNote}
-          className="bg-surface rounded-lg p-6 shadow-lg mb-8 border-l-4 border-accent"
-        >
-          <h2 className="text-2xl font-bold text-primary mb-6">
-            {editingId ? "Edit Note" : "Create New Note"}
-          </h2>
+      <AnimatePresence>
+        {showForm && (
+          <motion.form
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            onSubmit={handleSaveNote}
+            className="overflow-hidden"
+          >
+            <Card accent className="p-6 mb-8">
+              <h2 className="text-2xl font-bold text-primary mb-6">
+                {editingId ? "Edit Note" : "Create New Note"}
+              </h2>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-text mb-2">
-              {t("notes.title_label")}
-            </label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Note title..."
-              className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background text-text focus:ring-2 focus:ring-accent focus:border-transparent"
-              required
-            />
-          </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-text mb-2">
+                  {t("notes.title_label")}
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Note title..."
+                  className="w-full"
+                  required
+                />
+              </div>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-text mb-2">
-              {t("notes.content")}
-            </label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Note content..."
-              className="w-full h-64 p-4 border border-primary/20 rounded-lg bg-background text-text focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
-              required
-            />
-          </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-text mb-2">
+                  {t("notes.content")}
+                </label>
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Note content..."
+                  className="w-full h-64 resize-none"
+                  required
+                />
+              </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium text-text mb-2">
-                {t("notes.tags")}
-              </label>
-              <input
-                type="text"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder="islam, quran, history"
-                className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background text-text focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text mb-2">
-                {t("notes.language")}
-              </label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background text-text focus:ring-2 focus:ring-accent focus:border-transparent"
-              >
-                <option value="en">English</option>
-                <option value="bn">বাংলা</option>
-                <option value="ar">العربية</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              type="submit"
-              className="flex-1 bg-primary hover:bg-accent text-white font-bold py-2 rounded-lg transition-colors"
-            >
-              {editingId ? "Update Note" : t("notes.save")}
-            </button>
-            <button
-              type="button"
-              onClick={handleCloseForm}
-              className="flex-1 bg-text/20 hover:bg-text/30 text-text font-bold py-2 rounded-lg transition-colors"
-            >
-              {t("common.cancel")}
-            </button>
-          </div>
-        </form>
-      )}
-
-      {loading ? (
-        <div className="text-center py-12">
-          <p>{t("common.loading")}</p>
-        </div>
-      ) : notes.length === 0 ? (
-        <div className="text-center py-12 text-text/60">
-          <p>No notes yet. Create your first note!</p>
-        </div>
-      ) : (
-        <div className="grid gap-6">
-          {notes.map((note) => (
-            <div
-              key={note.id}
-              className="bg-surface rounded-lg p-6 shadow-lg border-l-4 border-primary hover:shadow-xl transition-shadow"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-primary">
-                    {note.title}
-                  </h3>
-                  <p className="text-sm text-text/60">
-                    {new Date(note.createdAt).toLocaleDateString()}
-                    {note.updatedAt !== note.createdAt && " (edited)"}
-                  </p>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    {t("notes.tags")}
+                  </label>
+                  <input
+                    type="text"
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                    placeholder="islam, quran, history"
+                    className="w-full"
+                  />
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleOpenForm(note)}
-                    className="text-blue-600 hover:text-blue-800 font-bold text-lg"
-                    title="Edit note"
+
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    {t("notes.language")}
+                  </label>
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    className="w-full"
                   >
-                    ✏️
-                  </button>
-                  <button
-                    onClick={() => handleDeleteNote(note.id)}
-                    className="text-red-600 hover:text-red-800 font-bold text-lg"
-                    title="Delete note"
-                  >
-                    🗑️
-                  </button>
+                    <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="ar">العربية</option>
+                  </select>
                 </div>
               </div>
 
-              <p className="text-text/80 mb-3 line-clamp-3">{note.content}</p>
+              <div className="flex gap-3">
+                <Button type="submit" className="flex-1">
+                  {editingId ? "Update Note" : t("notes.save")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="flex-1"
+                  onClick={handleCloseForm}
+                >
+                  {t("common.cancel")}
+                </Button>
+              </div>
+            </Card>
+          </motion.form>
+        )}
+      </AnimatePresence>
 
-              {note.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {note.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+      {loading ? (
+        <div className="grid gap-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="bg-surface rounded-xl p-6 shadow-card space-y-3">
+              <Skeleton className="h-5 w-1/3" />
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-2/3" />
             </div>
           ))}
         </div>
+      ) : notes.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-20 text-text/60"
+        >
+          <NotebookPen className="w-12 h-12 mx-auto mb-4 text-text/30" />
+          <p>No notes yet. Create your first note!</p>
+        </motion.div>
+      ) : (
+        <div className="grid gap-6">
+          <AnimatePresence>
+            {notes.map((note, i) => (
+              <Card
+                key={note.id}
+                hover
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.25, delay: i * 0.04 }}
+                className="p-6 border-l-4 border-primary"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-primary">
+                      {note.title}
+                    </h3>
+                    <p className="text-sm text-text/60">
+                      {new Date(note.createdAt).toLocaleDateString()}
+                      {note.updatedAt !== note.createdAt && " (edited)"}
+                    </p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => handleOpenForm(note)}
+                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 p-2 rounded-lg transition-colors focus-ring"
+                      title="Edit note"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setPendingDelete(note.id)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg transition-colors focus-ring"
+                      title="Delete note"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-text/80 mb-3 line-clamp-3">{note.content}</p>
+
+                {note.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {note.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            ))}
+          </AnimatePresence>
+        </div>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        title="Delete this note?"
+        description="This action cannot be undone."
+        onConfirm={handleDeleteNote}
+        onCancel={() => setPendingDelete(null)}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 
 interface ProtectedRouteProps {
@@ -11,11 +12,18 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-text/60">Loading...</p>
-        </div>
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <div className="relative w-14 h-14 mx-auto mb-4">
+            <div className="absolute inset-0 rounded-full border-2 border-primary/15" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent animate-spin" />
+          </div>
+          <p className="text-text/50 text-sm animate-pulse">Loading...</p>
+        </motion.div>
       </div>
     );
   }
