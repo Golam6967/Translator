@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidLangCode } from "../services/translationService";
+import { DETAIL_FIELDS, isValidLangCode } from "../services/translationService";
 
 export const MAX_SENTENCE_LENGTH = 2000;
 
@@ -21,6 +21,34 @@ export const SentenceRequestSchema = z
   });
 
 export type SentenceRequest = z.infer<typeof SentenceRequestSchema>;
+
+export const MAX_WORD_LENGTH = 100;
+
+const wordText = z
+  .string()
+  .trim()
+  .min(1, "word must not be empty")
+  .max(MAX_WORD_LENGTH, `word must be at most ${MAX_WORD_LENGTH} characters`);
+
+export const WordRequestSchema = z
+  .object({ word: wordText, fromLang: langCode, toLang: langCode })
+  .refine((v) => v.fromLang !== v.toLang, {
+    message: "fromLang and toLang must be different",
+    path: ["toLang"],
+  });
+
+export const DetailsRequestSchema = z.object({
+  word: wordText,
+  lang: langCode,
+  fields: z
+    .array(z.enum(DETAIL_FIELDS as [string, ...string[]]))
+    .min(1, "fields must not be empty")
+    .max(DETAIL_FIELDS.length),
+});
+
+export function validationMessage(error: z.ZodError): string {
+  return error.issues.map((i) => `${i.path.join(".") || "body"}: ${i.message}`).join("; ");
+}
 
 export const DraftSchema = z.object({
   translation: z.string().trim().min(1),

@@ -1,19 +1,27 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { requireAuth } from "../middleware/auth";
 import { ApiError } from "../middleware/errorHandler";
+import { createRateLimiter } from "../middleware/rateLimit";
 import {
-  DETAIL_FIELDS,
   DetailField,
   getSupportedLanguages,
   getWordDetails,
-  isValidLangCode,
   translateWord,
 } from "../services/translationService";
 import { saveSentenceHistory } from "../translation/history";
 import { translateSentence } from "../translation/pipeline";
-import { SentenceRequestSchema } from "../translation/schemas";
+import {
+  DetailsRequestSchema,
+  SentenceRequestSchema,
+  WordRequestSchema,
+  validationMessage,
+} from "../translation/schemas";
 
 const router = Router();
+
+// Word lookups fan out (one call per output language plus detail calls), so allow more.
+const lookupLimiter = createRateLimiter({ windowMs: 60_000, max: 60 });
+const sentenceLimiter = createRateLimiter({ windowMs: 60_000, max: 10 });
 
 // GET /api/translate/languages
 router.get("/languages", (req: Request, res: Response) => {
@@ -24,23 +32,13 @@ router.get("/languages", (req: Request, res: Response) => {
 router.post(
   "/word",
   requireAuth,
+  lookupLimiter,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { word, fromLang, toLang } = req.body ?? {};
+      const parsed = WordRequestSchema.safeParse(req.body ?? {});
+      if (!parsed.success) throw new ApiError(400, validationMessage(parsed.error));
 
-      if (typeof word !== "string" || !word.trim() || word.trim().length > 100) {
-        throw new ApiError(400, "word must be a non-empty string of at most 100 characters");
-      }
-      if (typeof fromLang !== "string" || !isValidLangCode(fromLang)) {
-        throw new ApiError(400, "fromLang must be a supported language code");
-      }
-      if (typeof toLang !== "string" || !isValidLangCode(toLang)) {
-        throw new ApiError(400, "toLang must be a supported language code");
-      }
-      if (fromLang === toLang) {
-        throw new ApiError(400, "fromLang and toLang must be different");
-      }
-
+      const { word, fromLang, toLang } = parsed.data;
       const result = await translateWord(word, fromLang, toLang);
 
       if (!result) {
@@ -69,25 +67,14 @@ router.post(
 router.post(
   "/details",
   requireAuth,
+  lookupLimiter,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { word, lang, fields } = req.body ?? {};
+      const parsed = DetailsRequestSchema.safeParse(req.body ?? {});
+      if (!parsed.success) throw new ApiError(400, validationMessage(parsed.error));
 
-      if (typeof word !== "string" || !word.trim() || word.trim().length > 100) {
-        throw new ApiError(400, "word must be a non-empty string of at most 100 characters");
-      }
-      if (typeof lang !== "string" || !isValidLangCode(lang)) {
-        throw new ApiError(400, "lang must be a supported language code");
-      }
-      if (
-        !Array.isArray(fields) ||
-        fields.length === 0 ||
-        !fields.every((f) => DETAIL_FIELDS.includes(f))
-      ) {
-        throw new ApiError(400, `fields must be a non-empty array of: ${DETAIL_FIELDS.join(", ")}`);
-      }
-
-      const details = await getWordDetails(word.trim(), lang, fields as DetailField[]);
+      const { word, lang, fields } = parsed.data;
+      const details = await getWordDetails(word, lang, fields as DetailField[]);
       if (!details) {
         throw new ApiError(503, "Word details are currently unavailable");
       }
@@ -103,15 +90,11 @@ router.post(
 router.post(
   "/sentence",
   requireAuth,
+  sentenceLimiter,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const parsed = SentenceRequestSchema.safeParse(req.body ?? {});
-      if (!parsed.success) {
-        const message = parsed.error.issues
-          .map((i) => `${i.path.join(".") || "body"}: ${i.message}`)
-          .join("; ");
-        throw new ApiError(400, message);
-      }
+      if (!parsed.success) throw new ApiError(400, validationMessage(parsed.error));
 
       const result = await translateSentence(parsed.data);
 

@@ -17,8 +17,9 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+// Largest legitimate body is a 2000-character sentence plus metadata.
+app.use(bodyParser.json({ limit: "100kb" }));
+app.use(bodyParser.urlencoded({ limit: "100kb", extended: true }));
 
 // Health check
 app.get("/health", (req, res) => {
