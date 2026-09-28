@@ -49,6 +49,7 @@ export function flagPrompt(
     `You are a scholar of Islamic terminology. List terms or phrases in the ${LANG_NAMES[sourceLang]} source whose ${LANG_NAMES[targetLang]} rendering is ambiguous or has several valid interpretations. ${GUARD}\n` +
     `Respond with JSON only, exactly this shape:\n` +
     `{"flags": [{"term": string, "reason": "polysemy"|"theological_nuance"|"idiom"|"unclear_source", "note": string, "alternatives": string[]}], "scriptureLikely": boolean}\n` +
+    `Write each note in English and each alternative as a ${LANG_NAMES[targetLang]} rendering.\n` +
     `Return at most 5 flags, and an empty list when nothing is genuinely ambiguous. Set scriptureLikely to true only if the source appears to quote the Quran or a hadith. Do not fabricate references.\n\n` +
     untrusted("source", source) +
     "\n\n" +
