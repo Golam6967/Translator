@@ -1,4 +1,3 @@
-import React from "react";
 import { LanguageMeta } from "../../lib/languages";
 
 export default function LanguageBadge({

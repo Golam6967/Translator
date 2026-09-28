@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import { RefObject } from "react";
 import { Delete, X } from "lucide-react";
 
 const KEYBOARD_LAYOUTS: Record<string, string[]> = {
