@@ -10,7 +10,7 @@ import app from "./app";
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(`[SERVER] Al-Maktaba Backend running on port ${PORT}`);
+  console.log(`[SERVER] Acculator Backend running on port ${PORT}`);
   console.log(`[SERVER] Environment: ${process.env.NODE_ENV || "development"}`);
 });
 

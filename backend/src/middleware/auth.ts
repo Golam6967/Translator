@@ -47,7 +47,7 @@ export const verifyFirebaseToken = async (
               "User",
             language: "en",
             theme: "light",
-            defaultSourceLang: "bn",
+            defaultSourceLang: "en",
             fontSize: "medium",
           },
         });

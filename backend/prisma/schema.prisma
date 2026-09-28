@@ -11,62 +11,31 @@ datasource db {
 }
 
 model User {
-  id                 String   @id @default(cuid())
-  email              String   @unique
+  id                 String    @id @default(cuid())
+  email              String    @unique
   displayName        String?
-  firebaseUid        String?  @unique
-  googleId           String?  @unique
+  firebaseUid        String?   @unique
+  googleId           String?   @unique
   avatar             String?
-  language           String   @default("en")
-  theme              String   @default("light")
-  defaultSourceLang  String   @default("bn")
-  fontSize           String   @default("medium")
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  savedTranslations  SavedTranslation[]
-  notes              Note[]
+  language           String    @default("en")
+  theme              String    @default("light")
+  defaultSourceLang  String    @default("en")
+  fontSize           String    @default("medium")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
   history            History[]
 
   @@map("users")
 }
 
-model SavedTranslation {
-  id              String   @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  originalText    String   @db.Text
-  sourceLang      String
-  translations    Json     // { langCode: translatedText }
-  tags            String[] @default([])
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@map("saved_translations")
-}
-
-model Note {
-  id           String   @id @default(cuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title        String
-  content      String   @db.Text
-  tags         String[] @default([])
-  language     String   @default("en")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@map("notes")
-}
-
 model History {
-  id           String   @id @default(cuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type         String   // "translate", "extract_image", "extract_document", "create_note"
-  data         String   @db.Text
-  metadata     Json?
-  createdAt    DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  data      String
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("history")
 }
