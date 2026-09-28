@@ -1,4 +1,5 @@
 import { db } from "../lib/dictionary-db";
+import { callLLM } from "../llm/callWithMeta";
 
 export interface SupportedLanguage {
   code: string;
@@ -178,8 +179,6 @@ function translateFromDictionary(
   }
 }
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-
 const LANG_NAMES: Record<string, string> = Object.fromEntries(
   SUPPORTED_LANGUAGES.map((l) => [l.code, l.name]),
 );
@@ -206,52 +205,21 @@ function parseTranslations(text: string): TranslationResult[] {
   ).slice(0, 3);
 }
 
-const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
-
-async function callGroq(prompt: string): Promise<string | null> {
-  const apiKey = process.env.GROQ_API_KEY;
-  if (!apiKey) return null;
-
-  try {
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        temperature: 0,
-        response_format: { type: "json_object" },
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("[TRANSLATION SERVICE] Groq error", response.status, await response.text());
-      return null;
-    }
-
-    const data = (await response.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    return data.choices?.[0]?.message?.content ?? null;
-  } catch (error) {
-    console.error("[TRANSLATION SERVICE] Groq call failed", error);
-    return null;
-  }
-}
-
-async function translateFromGroq(
+async function translateFromLLM(
   word: string,
   fromLang: string,
   toLang: string,
 ): Promise<TranslateWordResult | null> {
-  const text = await callGroq(buildPrompt(word, fromLang, toLang));
-  if (!text) return null;
+  const { output, provider } = await callLLM({
+    step: "word",
+    prompt: buildPrompt(word, fromLang, toLang),
+  });
 
   try {
-    const results = parseTranslations(text);
-    return results.length ? { results, source: "groq" } : null;
-  } catch (error) {
-    console.error("[TRANSLATION SERVICE] Groq returned invalid JSON", error);
+    const results = parseTranslations(output);
+    return results.length ? { results, source: provider } : null;
+  } catch {
+    console.error("[TRANSLATION SERVICE] LLM returned invalid JSON for word lookup");
     return null;
   }
 }
@@ -290,8 +258,7 @@ export async function getWordDetails(
     `. Describe only the word itself, never a person or biography. ` +
     `If it is not a real ${langName} word or name, return empty values.`;
 
-  const text = await callGroq(prompt);
-  if (!text) return null;
+  const { output: text } = await callLLM({ step: "details", prompt });
 
   try {
     const parsed = JSON.parse(text) as Record<string, unknown>;
@@ -307,72 +274,6 @@ export async function getWordDetails(
   }
 }
 
-async function translateFromGemini(
-  word: string,
-  fromLang: string,
-  toLang: string,
-): Promise<TranslateWordResult | null> {
-  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  if (!apiKey) {
-    console.warn("[TRANSLATION SERVICE] GOOGLE_GENERATIVE_AI_API_KEY not set; Gemini fallback disabled");
-    return null;
-  }
-
-  const prompt = buildPrompt(word, fromLang, toLang);
-
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0,
-            responseMimeType: "application/json",
-            responseSchema: {
-              type: "OBJECT",
-              properties: {
-                translations: {
-                  type: "ARRAY",
-                  items: {
-                    type: "OBJECT",
-                    properties: {
-                      translation: { type: "STRING" },
-                      pos: { type: "STRING" },
-                    },
-                    required: ["translation"],
-                  },
-                },
-              },
-              required: ["translations"],
-            },
-          },
-        }),
-      },
-    );
-
-    if (!response.ok) {
-      console.error("[TRANSLATION SERVICE] Gemini error", response.status, await response.text());
-      return null;
-    }
-
-    const data = (await response.json()) as {
-      candidates?: { content?: { parts?: { text?: string }[] } }[];
-    };
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) return null;
-
-    const results = parseTranslations(text);
-
-    return results.length ? { results, source: "gemini" } : null;
-  } catch (error) {
-    console.error("[TRANSLATION SERVICE] Gemini fallback failed", error);
-    return null;
-  }
-}
-
 export async function translateWord(
   word: string,
   fromLang: string,
@@ -381,8 +282,5 @@ export async function translateWord(
   const dictionaryResult = translateFromDictionary(word, fromLang, toLang);
   if (dictionaryResult) return dictionaryResult;
 
-  const groqResult = await translateFromGroq(word, fromLang, toLang);
-  if (groqResult) return groqResult;
-
-  return translateFromGemini(word, fromLang, toLang);
+  return translateFromLLM(word, fromLang, toLang);
 }
