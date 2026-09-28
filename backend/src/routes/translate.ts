@@ -9,6 +9,8 @@ import {
   isValidLangCode,
   translateWord,
 } from "../services/translationService";
+import { translateSentence } from "../translation/pipeline";
+import { SentenceRequestSchema } from "../translation/schemas";
 
 const router = Router();
 
@@ -97,11 +99,24 @@ router.post(
 );
 
 // POST /api/translate/sentence
-router.post("/sentence", requireAuth, (req: Request, res: Response) => {
-  res.status(501).json({
-    error: "Sentence translation coming soon",
-    message: "Currently only single word lookup is supported",
-  });
-});
+router.post(
+  "/sentence",
+  requireAuth,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const parsed = SentenceRequestSchema.safeParse(req.body ?? {});
+      if (!parsed.success) {
+        const message = parsed.error.issues
+          .map((i) => `${i.path.join(".") || "body"}: ${i.message}`)
+          .join("; ");
+        throw new ApiError(400, message);
+      }
+
+      res.status(200).json(await translateSentence(parsed.data));
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default router;

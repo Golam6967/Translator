@@ -179,7 +179,7 @@ function translateFromDictionary(
   }
 }
 
-const LANG_NAMES: Record<string, string> = Object.fromEntries(
+export const LANG_NAMES: Record<string, string> = Object.fromEntries(
   SUPPORTED_LANGUAGES.map((l) => [l.code, l.name]),
 );
 
