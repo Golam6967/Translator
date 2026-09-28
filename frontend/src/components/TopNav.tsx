@@ -3,8 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Languages,
-  NotebookPen,
-  Star,
+  FileText,
   History,
   Settings,
   Moon,
@@ -19,8 +18,7 @@ import { useTheme } from "../contexts/ThemeContext";
 
 const navItems = [
   { id: "translate", label: "nav.translate", path: "/dashboard", icon: Languages, end: true },
-  { id: "notes", label: "nav.notes", path: "/dashboard/notes", icon: NotebookPen },
-  { id: "saved", label: "nav.saved", path: "/dashboard/saved", icon: Star },
+  { id: "sentence", label: "nav.sentence", path: "/dashboard/sentence", icon: FileText },
   { id: "history", label: "nav.history", path: "/dashboard/history", icon: History },
   { id: "settings", label: "nav.settings", path: "/dashboard/settings", icon: Settings },
 ];

@@ -14,6 +14,7 @@ const translations = {
   en: {
     "nav.home": "Home",
     "nav.translate": "Translate",
+    "nav.sentence": "Sentence",
     "nav.notes": "Notes",
     "nav.saved": "Saved",
     "nav.documents": "Documents",
@@ -79,6 +80,7 @@ const translations = {
   bn: {
     "nav.home": "হোম",
     "nav.translate": "অনুবাদ",
+    "nav.sentence": "বাক্য",
     "nav.notes": "নোট",
     "nav.saved": "সংরক্ষিত",
     "nav.documents": "নথি",

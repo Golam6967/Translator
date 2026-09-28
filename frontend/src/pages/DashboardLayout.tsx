@@ -5,6 +5,7 @@ import TopNav from "../components/TopNav";
 
 // Pages
 import TranslatePage from "./TranslatePage";
+import SentencePage from "./SentencePage";
 import NotesPage from "./NotesPage";
 import SavedLibraryPage from "./SavedLibraryPage";
 import HistoryPage from "./HistoryPage";
@@ -31,6 +32,10 @@ function AnimatedRoutes() {
         <Route
           path="/dashboard"
           element={<PageTransition><TranslatePage /></PageTransition>}
+        />
+        <Route
+          path="/dashboard/sentence"
+          element={<PageTransition><SentencePage /></PageTransition>}
         />
         <Route
           path="/dashboard/notes"
