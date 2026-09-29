@@ -55,7 +55,7 @@ backend/   Express + TypeScript API, Prisma (PostgreSQL), SQLite dictionary, LLM
 frontend/  React 18 + Vite + Tailwind
 docker-compose.yml   local PostgreSQL
 docs/AUDIT.md        notes on the repo's state and open decisions
-docs/DEPLOY.md        Railway (backend + Postgres) + Vercel (frontend) deploy steps
+docs/DEPLOY.md        Render (backend) + Neon (Postgres) + Vercel (frontend) deploy steps
 ```
 
 ## Setup

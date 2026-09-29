@@ -1,62 +1,87 @@
 # Deploying Al-Maktaba
 
-Backend on Railway, frontend on Vercel, database on Railway PostgreSQL. Deploy the backend first, since the frontend needs its URL.
+Backend on **Render** (free web service), database on **Neon** (free Postgres), frontend on **Vercel**. Deploy the database and backend first, since the frontend needs the backend's URL.
 
-Before you start: create fresh `GROQ_API_KEY`, `GOOGLE_GENERATIVE_AI_API_KEY` and Firebase service-account keys if the ones on your machine were ever pasted anywhere outside your own `.env` file.
+Before you start: if any API key or database password was ever pasted somewhere it could leak (a chat, a public gist, etc.), rotate it first.
 
-## 1. Backend + database on Railway
+## 1. Database on Neon
 
-1. **New Project → Deploy from GitHub repo**, select this repo. Railway creates one service from the repo root; open its **Settings → Source** and set **Root Directory** to `backend`.
-2. **Add a database:** in the project, **New → Database → Add PostgreSQL**.
-3. In the backend service's **Variables**, set:
+1. neon.com → sign up (no card needed) → create a project.
+2. On the project dashboard, click **Connect** and copy the connection string (`postgresql://user:pass@ep-xxxx.neon.tech/dbname?sslmode=require...`). This is your `DATABASE_URL`.
+3. Create the tables. Render's **free** plan has no Shell access, so run the migration from your own machine instead — Neon is reachable from anywhere:
+   ```bash
+   cd backend
+   # put the Neon connection string in DATABASE_URL for just this one command
+   DATABASE_URL="<paste-the-neon-string>" npx prisma migrate deploy
+   ```
+   (On Windows PowerShell: `$env:DATABASE_URL="<string>"; npx prisma migrate deploy`.) You should see `All migrations have been successfully applied.` **Skipping this step is the single most common failure** — every request that touches the database will crash with `The table 'public.users' does not exist` until this has run.
 
-   | Variable | Value |
+## 2. Backend on Render
+
+1. Render dashboard → **New → Web Service** → connect GitHub → select this repo.
+2. **Settings → Build & Deploy → Root Directory**: set to `backend`.
+3. Fill in:
+   - **Runtime**: Node
+   - **Build Command**: `npm ci --legacy-peer-deps && npx prisma generate && npm run build`
+   - **Start Command**: `npm start`
+   - **Instance Type**: Free
+4. **Advanced → Health Check Path**: `/health`
+5. **Advanced → Environment Variables**:
+
+   | Key | Value |
    |---|---|
-   | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` (reference the Postgres service) |
-   | `FIREBASE_SERVICE_ACCOUNT_KEY` | the service-account JSON, on one line |
+   | `DATABASE_URL` | the Neon connection string from step 1 |
+   | `FIREBASE_SERVICE_ACCOUNT_KEY` | service-account JSON, one line |
    | `GROQ_API_KEY` | your Groq key |
    | `GOOGLE_GENERATIVE_AI_API_KEY` | optional (Gemini fallback) |
    | `NODE_ENV` | `production` |
 
-   Do not set `PORT` — Railway injects it, and `backend/src/index.ts` already reads `process.env.PORT`.
-4. Railway reads `backend/railway.toml` automatically:
-   - **Build:** `npm ci --legacy-peer-deps && npx prisma generate && npm run build`
-   - **Pre-deploy:** `npx prisma migrate deploy` (applies the committed migration to the Railway database; never `migrate dev` here)
-   - **Start:** `npm start`
-   - **Health check:** `GET /health`
-5. Deploy. Once it's live, open **Settings → Networking → Generate Domain**. Visit `https://<your-app>.up.railway.app/health` and confirm it returns `{"status":"ok",...}`.
+   Do not set `PORT` — Render injects it, and `backend/src/index.ts` reads `process.env.PORT`.
+6. **Create Web Service.**
+7. Once live, confirm `https://<your-service>.onrender.com/health` returns `{"status":"ok",...}`. First request after idle can take up to a minute (free-tier cold start — the box in the Render dashboard warns about this).
 
-### The dictionary
+`render.yaml` at the repo root mirrors these build/start/health-check settings as code (Render's "Blueprint" format). It only takes effect if you create the service *from* the blueprint (New → Blueprint) rather than manually; on an already-existing manually-created service it's just a reference for what the dashboard fields should say.
 
-`backend/data/dictionary.sqlite` (about 40 MB) is committed to the repo specifically so Railway has it — the file is explicitly un-ignored in `backend/.gitignore` and the root `.gitignore`. The raw Wiktionary JSONL sources it was built from (about 4 GB) stay out of git; nothing at deploy time needs them. Wiktionary data is CC BY-SA — the app's UI or docs should credit Wiktionary if you publish this deployment publicly.
+### Two real gotchas we hit, both caused by `NODE_ENV=production`
 
-If you ever regenerate the dictionary locally (`npm run import:dictionary` / `import:wikidata`), commit the updated `backend/data/dictionary.sqlite` the same way.
+Render sets `NODE_ENV=production`, and current npm (v9–v11) defaults to `omit=dev` whenever that's set — meaning `npm ci` **silently skips everything in `devDependencies`**.
 
-## 2. Frontend on Vercel
+- `prisma`, `typescript`, and the `@types/*` packages needed to compile the backend must live in `dependencies`, not `devDependencies`, or the build either can't run Prisma commands at all, or `tsc` fails with missing type declarations. This is already fixed in `backend/package.json` — if you ever move a build-time tool back into `devDependencies`, this will resurface.
+- If a build log shows `yarn install` running instead of the command from step 3 above, the custom Build Command setting didn't actually save (this happened once, cause unclear — possibly a UI issue when editing Root Directory). Go back to **Settings → Build & Deploy**, re-type the Build Command exactly, and click **Save Changes** before redeploying.
 
-1. **Add New → Project**, import the repo. Set **Root Directory** to `frontend`. Vercel auto-detects Vite (install: `npm install --legacy-peer-deps`, build: `npm run build`, output: `dist`).
-2. **Environment variables** (Project Settings → Environment Variables — these are baked in at build time, so re-deploy after changing any of them):
+If a deploy "succeeds" but `npm start` then fails with `Cannot find module '.../dist/index.js'`, the build never actually ran (see the `yarn install` gotcha above) — check **Manual Deploy → Deploy latest commit** actually triggered a fresh build, not just a restart of the existing (broken) instance. Editing an environment variable restarts the service; it does not rebuild it.
 
-   | Variable | Value |
+## 3. Frontend on Vercel
+
+1. **Add New → Project** → import the repo → **Root Directory**: `frontend` (Vercel should auto-detect Vite).
+2. **Environment Variables** (baked in at build time — redeploy after changing any of these):
+
+   | Key | Value |
    |---|---|
    | `VITE_FIREBASE_API_KEY` | from your Firebase web app config |
    | `VITE_FIREBASE_AUTH_DOMAIN` | " |
    | `VITE_FIREBASE_PROJECT_ID` | " |
    | `VITE_FIREBASE_MESSAGING_SENDER_ID` | " |
    | `VITE_FIREBASE_APP_ID` | " |
-   | `VITE_API_BASE_URL` | your Railway backend URL, no trailing slash |
+   | `VITE_API_BASE_URL` | your Render backend URL, no trailing slash |
 
-3. `frontend/vercel.json` rewrites all paths to `index.html`, which client-side routing (React Router) needs — without it, refreshing `/dashboard` 404s.
-4. Deploy. In the **Firebase console → Authentication → Settings → Authorized domains**, add the Vercel domain (and any custom domain), or Google sign-in will fail with `auth/unauthorized-domain`.
+   These are all public values baked into client-side JS regardless of Vercel's "Secret" vs "Config" setting — "Config" is more convenient since it can be viewed/edited later, but either works. Note: once a variable is saved as "Secret" it *cannot* be switched to "Config" afterward — you'd have to delete and recreate it.
+3. `frontend/vercel.json` rewrites all paths to `index.html`, which React Router needs (otherwise refreshing `/dashboard` 404s).
+4. Deploy.
+5. **Firebase console → Authentication → Settings → Authorized domains**: add the Vercel domain. Without this, Google sign-in fails.
+6. **After changing any `VITE_*` variable**, you must go to **Deployments → (latest) → ⋯ → Redeploy** — saving the variable alone does not rebuild the already-deployed site.
 
-## 3. Verify
+## 4. Verify
 
-Open the Vercel URL, sign in with Google, look up a word (dictionary and LLM-fallback paths), and translate a sentence (checks the full pipeline and Railway → Postgres write to History).
+Open the Vercel URL, sign in with Google, look up a word, translate a sentence. If sign-in causes the page to reload repeatedly, that's almost always the database migration from step 1 not having been run (check Render's Logs tab for a Prisma `P2021` "table does not exist" error).
 
-If something fails, check in this order: browser console/network tab for the failing request → Railway deploy logs → `GET /health` on the backend directly.
+## Local development after deploying
 
-## Known gaps at this stage
+`backend/.env` should stay pointed at your **local** Docker Postgres (`docker-compose.yml`) with `NODE_ENV=development` — don't leave it pointed at Neon/production between deploy sessions. `backend/.env.production.local` (gitignored) keeps a copy of the production values so you don't have to dig them out of Render's dashboard again next time.
+
+## Known gaps
 
 - **CORS is open to all origins** (`cors()` with no options in `backend/src/app.ts`). Fine to start; restrict to the Vercel domain once it's stable.
-- **Rate limiting is in-memory** and resets on every Railway redeploy; it also does not coordinate across multiple instances if you ever scale the service out.
-- **No custom domain, CI deploy gating, or staging environment** are set up — this covers a single production deploy of each service.
+- **Rate limiting is in-memory** and resets on every Render restart/redeploy.
+- **Render's free instance sleeps after inactivity**; the first request after that can take ~30-60s. Neon's free compute also auto-suspends after 5 minutes idle, adding a similar delay on its own first query.
+- No custom domain, CI deploy gating, or staging environment — this covers a single production deploy of each service.
